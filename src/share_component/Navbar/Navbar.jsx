@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [navSwitch, setNavSwitch] = useState(false);
 
@@ -29,8 +30,14 @@ const Navbar = () => {
             }`}
           >
             <ul className="md:flex pt-3 md:pt-0 container mx-auto items-center px-1">
-              <li className="nav-btn">Home</li>
-              <li className="nav-btn">Content</li>
+              <li className="nav-btn">
+                {" "}
+                <Link to={"/"}>Home</Link>
+              </li>
+              <li className="nav-btn">
+                {" "}
+                <Link to={"add_content"}>Add Content</Link>
+              </li>
             </ul>
           </div>
         </div>
