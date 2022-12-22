@@ -16,7 +16,7 @@ const Navbar = () => {
             {/* nav switch */}
             <div
               onClick={() => setNavSwitch(!navSwitch)}
-              className="text-3xl cursor-pointer md:hidden "
+              className="text-3xl cursor-pointer md:hidden"
             >
               {navSwitch ? <MdClose /> : <GiHamburgerMenu />}
             </div>

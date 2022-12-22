@@ -1,11 +1,15 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Home from './component/Home/Home';
 import Navbar from './share_component/Navbar/Navbar';
 
 function App() {
   return (
     <div className='container mx-auto'>
       <Navbar />
-      <h1 className='text-5xl'>React Redux app</h1>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
     </div>
   );
 }
