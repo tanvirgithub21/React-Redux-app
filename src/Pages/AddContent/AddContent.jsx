@@ -3,6 +3,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { POST_CONTENT } from "../../Redux/actionTypes/contentActionTypes";
+import { post_content } from "../../Redux/actionCreators/contentActionCreators";
 
 const AddContent = () => {
   const state = useSelector((state) => state);
@@ -20,7 +21,7 @@ const AddContent = () => {
     if (e.key !== "Enter") return;
     const value = e.target.value;
     if (!value.trim()) return;
-    dispatch({ type: POST_CONTENT, payload: e.target.value });
+    dispatch(post_content(value));
     setTags([...tags, value]);
 
     e.target.value = "";

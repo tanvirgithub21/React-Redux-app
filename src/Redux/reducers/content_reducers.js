@@ -1,6 +1,10 @@
 import { POST_CONTENT } from "../actionTypes/contentActionTypes"
 
-const content_reducers = (state = { formData: [] }, action) => {
+const initialState = {
+    formData: []
+}
+
+const content_reducers = (state = initialState, action) => {
 
     switch (action.type) {
         case POST_CONTENT:
