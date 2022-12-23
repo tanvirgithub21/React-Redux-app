@@ -1,0 +1,1 @@
+export const POST_CONTENT = "POST_CONTENT";

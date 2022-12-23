@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { POST_CONTENT } from "../../Redux/actionTypes/contentActionTypes";
 
 const AddContent = () => {
+  const state = useSelector((state) => state);
+  console.log(state);
+  const dispatch = useDispatch();
+
   const [tags, setTags] = useState([]);
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({});
@@ -14,7 +20,9 @@ const AddContent = () => {
     if (e.key !== "Enter") return;
     const value = e.target.value;
     if (!value.trim()) return;
+    dispatch({ type: POST_CONTENT, payload: e.target.value });
     setTags([...tags, value]);
+
     e.target.value = "";
   };
 
@@ -33,19 +41,19 @@ const AddContent = () => {
 
   return (
     <div className="container mx-auto min-h-screen">
-      <div class="flex items-center justify-center p-12">
-        <div class="mx-auto w-full max-w-[550px] bg-[#f7f7f7] border-2 border-gray-200 rounded-md">
+      <div className="flex items-center justify-center p-12">
+        <div className="mx-auto w-full max-w-[550px] bg-[#f7f7f7] border-2 border-gray-200 rounded-md">
           <form
-            class="py-6 px-9"
+            className="py-6 px-9"
             action="https://formbold.com/s/FORM_ID"
             method="POST"
           >
-            <div class="mb-2">
-              <label class="mb-5 block text-xl font-semibold text-center text-[#07074D]">
+            <div className="mb-2">
+              <label className="mb-5 block text-xl font-semibold text-center text-[#07074D]">
                 Add Content
               </label>
 
-              <div class="mb-1">
+              <div className="mb-1">
                 <input
                   type="file"
                   accept="image/*"
@@ -53,23 +61,23 @@ const AddContent = () => {
                   id="file"
                   required
                   onChange={handleImagePreview}
-                  class="sr-only"
+                  className="sr-only"
                 />
 
                 {/* images Uploaded fields */}
                 {!image && (
                   <label
-                    for="file"
-                    class="relative flex min-h-[250px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] bg-white p-7 text-center"
+                    htmlFor="file"
+                    className="relative flex min-h-[250px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] bg-white p-7 text-center"
                   >
                     <div>
-                      <span class="mb-2 block text-xl font-semibold text-[#07074D]">
+                      <span className="mb-2 block text-xl font-semibold text-[#07074D]">
                         Drop files here
                       </span>
-                      <span class="mb-2 block text-base font-medium text-[#6B7280]">
+                      <span className="mb-2 block text-base font-medium text-[#6B7280]">
                         Or
                       </span>
-                      <span class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                      <span className="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                         Browse
                       </span>
                     </div>
@@ -86,7 +94,7 @@ const AddContent = () => {
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                     }}
-                    class="flex min-h-[250px] rounded-md border border-dashed border-[#e0e0e0] overflow-hidden relative"
+                    className="flex min-h-[250px] rounded-md border border-dashed border-[#e0e0e0] overflow-hidden relative"
                   >
                     <div
                       title="Remove Image"
@@ -99,18 +107,18 @@ const AddContent = () => {
                 )}
               </div>
 
-              <div class="mb-5 rounded-md bg-white py-4 px-8">
+              <div className="mb-5 rounded-md bg-white py-4 px-8">
                 <div className="mb-2">
                   <label
-                    for="content_title"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="content_title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Content Title
                   </label>
                   <input
                     type="text"
                     id="content_title"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your Content Title here..."
                     required
                   />
@@ -118,8 +126,8 @@ const AddContent = () => {
 
                 <div className="mb-3">
                   <label
-                    for="content_details"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="content_details"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Content Details
                   </label>
@@ -127,7 +135,7 @@ const AddContent = () => {
                     id="content_details"
                     required
                     rows="4"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your Content Details here..."
                   ></textarea>
                 </div>
@@ -160,13 +168,13 @@ const AddContent = () => {
                 </div>
               </div>
             </div>
-
             {/* Submit Button ( Note: there button tag not used because facing problem! ) */}
-            <div>
-              <span class="inline-block w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white cursor-pointer">
-                Send File
-              </span>
-            </div>
+            <button
+              type="submit"
+              className="inline-block w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white cursor-pointer"
+            >
+              Send File
+            </button>
           </form>
         </div>
       </div>
