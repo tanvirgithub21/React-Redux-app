@@ -1,29 +1,22 @@
 import React, { useState } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import { POST_CONTENT } from "../../Redux/actionTypes/contentActionTypes";
-import { post_content } from "../../Redux/actionCreators/contentActionCreators";
 
 const AddContent = () => {
-  const state = useSelector((state) => state);
-  console.log(state);
-  const dispatch = useDispatch();
-
-  const [tags, setTags] = useState([]);
+  // Input felid value
+  const [tags, setTags] = useState(Array);
   const [image, setImage] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [content_title, setContent_title] = useState(String);
+  const [content_details, setContent_details] = useState(String);
 
-  console.log(formData);
+  console.log({ tags, image, content_details, content_title });
 
   // Save tags for press Enter key
   const handleKeyDown = (e) => {
     if (e.key !== "Enter") return;
     const value = e.target.value;
     if (!value.trim()) return;
-    dispatch(post_content(value));
     setTags([...tags, value]);
-
     e.target.value = "";
   };
 
@@ -44,11 +37,7 @@ const AddContent = () => {
     <div className="container mx-auto min-h-screen">
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-[#f7f7f7] border-2 border-gray-200 rounded-md">
-          <form
-            className="py-6 px-9"
-            action="https://formbold.com/s/FORM_ID"
-            method="POST"
-          >
+          <form>
             <div className="mb-2">
               <label className="mb-5 block text-xl font-semibold text-center text-[#07074D]">
                 Add Content
@@ -118,6 +107,7 @@ const AddContent = () => {
                   </label>
                   <input
                     type="text"
+                    onChange={(e) => setContent_title(e.target.value)}
                     id="content_title"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your Content Title here..."
@@ -134,6 +124,7 @@ const AddContent = () => {
                   </label>
                   <textarea
                     id="content_details"
+                    onChange={(e) => setContent_details(e.target.value)}
                     required
                     rows="4"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -171,7 +162,7 @@ const AddContent = () => {
             </div>
             {/* Submit Button ( Note: there button tag not used because facing problem! ) */}
             <button
-              type="submit"
+              type="button"
               className="inline-block w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white cursor-pointer"
             >
               Send File
