@@ -31,12 +31,13 @@ const Navbar = () => {
           >
             <ul className="md:flex pt-3 md:pt-0 container mx-auto items-center px-1">
               <li className="nav-btn">
-                {" "}
                 <Link to={"/"}>Home</Link>
               </li>
               <li className="nav-btn">
-                {" "}
                 <Link to={"add_content"}>Add Content</Link>
+              </li>
+              <li className="nav-btn">
+                <Link to={"admin"}>Admin</Link>
               </li>
             </ul>
           </div>

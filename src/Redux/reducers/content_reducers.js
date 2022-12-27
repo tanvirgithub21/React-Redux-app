@@ -8,7 +8,6 @@ const content_reducers = (state = initialState, action) => {
 
     switch (action.type) {
         case POST_CONTENT:
-            console.log("enter reducer");
             return {
                 ...state,
                 formData: [...state.formData, action.payload]

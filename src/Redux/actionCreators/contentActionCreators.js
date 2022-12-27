@@ -1,8 +1,8 @@
 import { POST_CONTENT } from "../actionTypes/contentActionTypes"
 
-export const post_content = (tag) => {
+export const post_content = (content_data) => {
     return {
         type: POST_CONTENT,
-        payload: tag,
+        payload: content_data,
     }
 }
