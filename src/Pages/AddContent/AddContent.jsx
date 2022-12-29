@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import postContent from "../../Redux/Thunk/postContentThunk";
 
 const AddContent = () => {
+  const { loading } = useSelector((state) => state.loading);
+
+  const { register, handleSubmit, reset } = useForm();
+  const dispatch = useDispatch();
+
   // Input felid value
   const [tags, setTags] = useState(Array);
   const [image, setImage] = useState(null);
-  const [content_title, setContent_title] = useState(String);
-  const [content_details, setContent_details] = useState(String);
-
-  console.log({ tags, image, content_details, content_title });
+  const [imagePrev, setImagePrev] = useState(null);
 
   // Save tags for press Enter key
   const handleKeyDown = (e) => {
@@ -27,17 +32,39 @@ const AddContent = () => {
 
   // Set Image preview
   const handleImagePreview = (e) => {
-    const image = e.target.files[0];
+    const image = e.target;
     if (image) {
+      console.log(image.files);
+      setImagePrev(image.files);
       setImage(image);
     }
   };
+
+  // Submit Data server
+  const onSubmit = (data) => {
+    if (tags.length >= 4) {
+      data.image = {
+        imageFile: image,
+        imageUrl: "",
+      };
+      data.tag = tags;
+      dispatch(postContent(data));
+      setImagePrev(null);
+      setTags([]);
+      reset();
+    }
+  };
+
+  if (loading) {
+    return <p>LOading................</p>;
+  }
 
   return (
     <div className="container mx-auto min-h-screen">
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-[#f7f7f7] border-2 border-gray-200 rounded-md">
-          <form>
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-2">
               <label className="mb-5 block text-xl font-semibold text-center text-[#07074D]">
                 Add Content
@@ -55,7 +82,7 @@ const AddContent = () => {
                 />
 
                 {/* images Uploaded fields */}
-                {!image && (
+                {!imagePrev && (
                   <label
                     htmlFor="file"
                     className="relative flex min-h-[250px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] bg-white p-7 text-center"
@@ -75,10 +102,12 @@ const AddContent = () => {
                 )}
 
                 {/* images preview */}
-                {image && (
+                {imagePrev && (
                   <div
                     style={{
-                      backgroundImage: `url(${URL.createObjectURL(image)})`,
+                      backgroundImage: `url(${URL.createObjectURL(
+                        imagePrev[0]
+                      )})`,
                       backgroundRepeat: "no-repeat",
                       width: "100%",
                       backgroundSize: "cover",
@@ -88,7 +117,7 @@ const AddContent = () => {
                   >
                     <div
                       title="Remove Image"
-                      onClick={() => setImage(null)}
+                      onClick={() => setImagePrev(null)}
                       className="w-7 h-7 bg-gray-700 flex justify-center items-center rounded-full absolute top-2 right-2 border-2 border-white cursor-pointer"
                     >
                       <IoClose className="text-white text-2xl" />
@@ -107,7 +136,7 @@ const AddContent = () => {
                   </label>
                   <input
                     type="text"
-                    onChange={(e) => setContent_title(e.target.value)}
+                    {...register("content_title")}
                     id="content_title"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your Content Title here..."
@@ -123,8 +152,7 @@ const AddContent = () => {
                     Content Details
                   </label>
                   <textarea
-                    id="content_details"
-                    onChange={(e) => setContent_details(e.target.value)}
+                    {...register("content_details")}
                     required
                     rows="4"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -149,20 +177,22 @@ const AddContent = () => {
                     </div>
                   ))}
 
-                  <input
-                    className="px-2 py-1 mt-2 flex-grow border-none outline-none bg-gray-50 "
-                    type="text"
-                    name="tag"
-                    id="tag"
-                    placeholder="Add Tag..."
-                    onKeyDown={handleKeyDown}
-                  />
+                  {!(tags.length >= 5) && (
+                    <input
+                      className="px-2 py-1 mt-2 flex-grow border-none outline-none bg-gray-50 "
+                      type="text"
+                      name="tag"
+                      id="tag"
+                      placeholder="Add Tag..."
+                      onKeyDown={handleKeyDown}
+                    />
+                  )}
                 </div>
               </div>
             </div>
             {/* Submit Button ( Note: there button tag not used because facing problem! ) */}
             <button
-              type="button"
+              type="submit"
               className="inline-block w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white cursor-pointer"
             >
               Send File

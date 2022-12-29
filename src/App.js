@@ -7,6 +7,8 @@ import Footer from './share_component/Footer/Footer';
 import { Provider } from "react-redux"
 import store from './Redux/store';
 import ReedContent from './share_component/ReedContent/ReedContent';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
           <Route path='add_content' element={<AddContent />} />
         </Routes>
         <Footer />
-      </div></Provider>
+      </div>
+      <ToastContainer />
+    </Provider>
   );
 }
 
